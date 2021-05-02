@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class CleanKasiski3 {
 
+    public static Bubblesort sort = new Bubblesort();
+
 
     // Bestimmen der Schlüsselwortlänge vom String des verschlüsselten Texts
     public static ArrayList<Integer> findRepeats(String cipher, int min, int max) {
@@ -86,7 +88,7 @@ public class CleanKasiski3 {
     }
 
     public static int[][] calcFreqRel(int[][] freqAbs){
-        Bubblesort sort = new Bubblesort();
+
         int[][] freqRel = sort.sort(freqAbs);
 
         return freqRel ;
@@ -107,7 +109,7 @@ public class CleanKasiski3 {
     }
 
     public static void main(String[] args) {
-        String cipher = "PWTMYTBADKDGPWPFYWFGUESOTLUPNVYWAPKCSOOJWWASTLSUZUSJMJBBRSTIMGPYSXOJWWASMMZQLCHJQWGYDHKOJWWASTMFPADWIPVKLHONZWPDPWRAAGQPRKNJCNPKGPJJLTHYOWOHPGYJWCUEKUZLGAOWKHOGPESMZMRWPBKVFVZTQNLAGSFSMVWTDPWRAAGQPRKNJCNPTGTKEOMSGVLYVCHKBVKLOFOBLGNCIVXWPLYBZAAEOOWKEWEODZKZOGPWGOMSWMPWTIFFLCTUTYGUOSLZSILYOHEWEODSRVVYHSFAVVHHWGIPTGHYHCWJVLERGJWKPDHGJWTUTQNBXGZEUKTWIAZPPMOGPWGJQWGYDHKNJCNPSOVWTZPFOMNQUQFGOWPYTQNBAIVOSXNSNZNVHMSPAHCXBWVDTFJRWFLASXAGPHYHCWJVLEOANWKUPTXIYGUFFSQLLHZRKZFGPYTXIYGUOWKVAEOEAOBBCVOSXVWKUMSGVLYVCHKBOGYOSTSGGUYSTAAPKYWIPLBBRSRIKULYJUVWKUPFHMDKLMWMMFRLCGUVKQSWAGVVWYNVLZSILYROMKKJSBAZSWMOWKHMILSCKZAIRPWZHMGPYSXLWTNCIVXWPIPNOMZGUSSXIMUIPYUUEGUKICMDEOPFMZMRWPGOMYGOZSXBOKLGWKTWHYLUKVEWZDAGVEKUOSYBWPZDHKTDGUFBJEWNJSSLZSILYYUMFPAPAGVKVLWZKV";
+        String cipher = "ABCABCABCABCABC"; //"PWTMYTBADKDGPWPFYWFGUESOTLUPNVYWAPKCSOOJWWASTLSUZUSJMJBBRSTIMGPYSXOJWWASMMZQLCHJQWGYDHKOJWWASTMFPADWIPVKLHONZWPDPWRAAGQPRKNJCNPKGPJJLTHYOWOHPGYJWCUEKUZLGAOWKHOGPESMZMRWPBKVFVZTQNLAGSFSMVWTDPWRAAGQPRKNJCNPTGTKEOMSGVLYVCHKBVKLOFOBLGNCIVXWPLYBZAAEOOWKEWEODZKZOGPWGOMSWMPWTIFFLCTUTYGUOSLZSILYOHEWEODSRVVYHSFAVVHHWGIPTGHYHCWJVLERGJWKPDHGJWTUTQNBXGZEUKTWIAZPPMOGPWGJQWGYDHKNJCNPSOVWTZPFOMNQUQFGOWPYTQNBAIVOSXNSNZNVHMSPAHCXBWVDTFJRWFLASXAGPHYHCWJVLEOANWKUPTXIYGUFFSQLLHZRKZFGPYTXIYGUOWKVAEOEAOBBCVOSXVWKUMSGVLYVCHKBOGYOSTSGGUYSTAAPKYWIPLBBRSRIKULYJUVWKUPFHMDKLMWMMFRLCGUVKQSWAGVVWYNVLZSILYROMKKJSBAZSWMOWKHMILSCKZAIRPWZHMGPYSXLWTNCIVXWPIPNOMZGUSSXIMUIPYUUEGUKICMDEOPFMZMRWPGOMYGOZSXBOKLGWKTWHYLUKVEWZDAGVEKUOSYBWPZDHKTDGUFBJEWNJSSLZSILYYUMFPAPAGVKVLWZKV";
         final double[] DEUTSCH = {6.51, 1.89, 3.06, 5.08, 17.41, 1.66, 3.01, 4.76, 7.55, 0.27, 1.21, 3.44, 2.53, 9.78, 2.51, 0.79, 0.02, 7.00, 7.89, 6.15, 4.35, 0.67, 1.89, 0.03, 0.04, 1.13};
                                 //  a     b     c     d     e     f     g     h     i     j     k     l     m     n     o     p     q     r     s     t     u     v     w     x     y     z
 
@@ -116,19 +118,27 @@ public class CleanKasiski3 {
         int keywordlength = calcKeywordlength(distance);
         String divided = divideString(cipher, keywordlength);
         int[][] freqAbs = calcFreqAbs(cipher, keywordlength);
-        int[][] freqRel = calcFreqRel(freqAbs);
 
         printFreq(DEUTSCH);
         System.out.println("\n \n" + "Gefundene Abstände: " + distance);
         System.out.println("\n" + "Schlüsselwortlänge: " + keywordlength);
         System.out.println("\n" + "Geteilter Geheimtext: " + "\n" + divided);
 
+        char c = 'A';
+
+        System.out.println("\nHaufigkeiten an Blockpositionen:");
+
         for (int i = 0; i < 26; i++) {
+            System.out.print(c + " | ");
+
             for (int j = 0; j < keywordlength; j++) {
                 System.out.print(freqAbs[i][j] + ", ");
             }
-            System.out.println("");
+            System.out.println();
+            c++;
         }
+
+        int[][] freqRel = calcFreqRel(freqAbs);
 
         System.out.print("\n \n");
         for (int i = 0; i < 26; i++) {
@@ -137,8 +147,5 @@ public class CleanKasiski3 {
             }
             System.out.println("");
         }
-
-
-
     }
 }
