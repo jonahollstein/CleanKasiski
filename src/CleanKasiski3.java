@@ -7,7 +7,7 @@ public class CleanKasiski3 {
 
     // Bestimmen der Schlüsselwortlänge vom String des verschlüsselten Texts
     public static ArrayList<Integer> findRepeats(String cipher, int min, int max) {
-        ArrayList<Integer> distance = new ArrayList<Integer>();     // initalisieren und definieren einer neuen ArrayList als Integer-Typ
+        ArrayList<Integer> distance = new ArrayList<>();     // initalisieren und definieren einer neuen ArrayList als Integer-Typ
         cipher = cipher.toUpperCase();
 
         for (int l = min; l < max; l++) {                                 // Hochzählen einer for-Schleife, wobei die Länge l variiert für die gesuchten Buchstabenketten mit den Längen 4-10
@@ -61,7 +61,7 @@ public class CleanKasiski3 {
 
 
     // Den Text in Blöcke entsprechend der Schlüssellänge unterteilen
-    public static String divideString(String cipher, int keywordlength) {
+    /*public static String divideString(String cipher, int keywordlength) {
         int p = 0;
         String divide = "";
 
@@ -73,7 +73,7 @@ public class CleanKasiski3 {
         }
 
         return divide;
-    }
+    }*/
 
     public static int[][] calcFreqAbs(String cipher, int keywordlength) {
         int[][] freqAbs = new int[26][keywordlength];
@@ -87,19 +87,41 @@ public class CleanKasiski3 {
         return freqAbs;
     }
 
-    public static int[][] calcFreqRel(int[][] freqAbs){
+    public static double[][] calcFreqRel(int[][] freqAbs, String cipher, int keywordlength){
 
-        int[][] freqRel = sort.sort(freqAbs);
+        //Für Später:
 
+        /*int [][] copy = new int[freqAbs.length][];
+        for (int i = 0; i < freqAbs.length; i++) {
+            copy[i] = Arrays.copyOf(freqAbs[i], freqAbs[i].length);
+        }
+
+        int[][] freqAbsSort = sort.sort(copy);*/
+
+
+        double block = ((double)cipher.length()/keywordlength);
+
+        double[][] freqRel = new double[26][freqAbs[0].length];
+        for (int i=0; i<freqRel.length; i++) {
+            for(int j=0; j<freqRel[0].length; j++){
+                freqRel[i][j] = Math.round(((double)freqAbs[i][j]/block*100)*100.0)/100.0;
+            }
+        }
         return freqRel ;
     }
 
     // Häufkeitsverteilung printen
-    public static void printFreq(double[] lang) {
+    public static void printFreq(double[] language) {
         System.out.print("\n" + "Häufigkeit: | ");
-        for (int i = 0; i < lang.length; i++) {
-            System.out.print(lang[i] + " | ");
+        for (double v : language) {
+            System.out.print(v + " | ");
         }
+
+        /* 'Enhanced' foreach-Schleife
+
+        for (int i = 0; i < language.length; i++) {
+            System.out.print(language[i] + " | ");
+        }*/
 
         System.out.print("\n" + "Zeichen:    |   ");
 
@@ -109,20 +131,23 @@ public class CleanKasiski3 {
     }
 
     public static void main(String[] args) {
-        String cipher = "ABCABCABCABCABC"; //"PWTMYTBADKDGPWPFYWFGUESOTLUPNVYWAPKCSOOJWWASTLSUZUSJMJBBRSTIMGPYSXOJWWASMMZQLCHJQWGYDHKOJWWASTMFPADWIPVKLHONZWPDPWRAAGQPRKNJCNPKGPJJLTHYOWOHPGYJWCUEKUZLGAOWKHOGPESMZMRWPBKVFVZTQNLAGSFSMVWTDPWRAAGQPRKNJCNPTGTKEOMSGVLYVCHKBVKLOFOBLGNCIVXWPLYBZAAEOOWKEWEODZKZOGPWGOMSWMPWTIFFLCTUTYGUOSLZSILYOHEWEODSRVVYHSFAVVHHWGIPTGHYHCWJVLERGJWKPDHGJWTUTQNBXGZEUKTWIAZPPMOGPWGJQWGYDHKNJCNPSOVWTZPFOMNQUQFGOWPYTQNBAIVOSXNSNZNVHMSPAHCXBWVDTFJRWFLASXAGPHYHCWJVLEOANWKUPTXIYGUFFSQLLHZRKZFGPYTXIYGUOWKVAEOEAOBBCVOSXVWKUMSGVLYVCHKBOGYOSTSGGUYSTAAPKYWIPLBBRSRIKULYJUVWKUPFHMDKLMWMMFRLCGUVKQSWAGVVWYNVLZSILYROMKKJSBAZSWMOWKHMILSCKZAIRPWZHMGPYSXLWTNCIVXWPIPNOMZGUSSXIMUIPYUUEGUKICMDEOPFMZMRWPGOMYGOZSXBOKLGWKTWHYLUKVEWZDAGVEKUOSYBWPZDHKTDGUFBJEWNJSSLZSILYYUMFPAPAGVKVLWZKV";
+        String cipher = "PWTMYTBADKDGPWPFYWFGUESOTLUPNVYWAPKCSOOJWWASTLSUZUSJMJBBRSTIMGPYSXOJWWASMMZQLCHJQWGYDHKOJWWASTMFPADWIPVKLHONZWPDPWRAAGQPRKNJCNPKGPJJLTHYOWOHPGYJWCUEKUZLGAOWKHOGPESMZMRWPBKVFVZTQNLAGSFSMVWTDPWRAAGQPRKNJCNPTGTKEOMSGVLYVCHKBVKLOFOBLGNCIVXWPLYBZAAEOOWKEWEODZKZOGPWGOMSWMPWTIFFLCTUTYGUOSLZSILYOHEWEODSRVVYHSFAVVHHWGIPTGHYHCWJVLERGJWKPDHGJWTUTQNBXGZEUKTWIAZPPMOGPWGJQWGYDHKNJCNPSOVWTZPFOMNQUQFGOWPYTQNBAIVOSXNSNZNVHMSPAHCXBWVDTFJRWFLASXAGPHYHCWJVLEOANWKUPTXIYGUFFSQLLHZRKZFGPYTXIYGUOWKVAEOEAOBBCVOSXVWKUMSGVLYVCHKBOGYOSTSGGUYSTAAPKYWIPLBBRSRIKULYJUVWKUPFHMDKLMWMMFRLCGUVKQSWAGVVWYNVLZSILYROMKKJSBAZSWMOWKHMILSCKZAIRPWZHMGPYSXLWTNCIVXWPIPNOMZGUSSXIMUIPYUUEGUKICMDEOPFMZMRWPGOMYGOZSXBOKLGWKTWHYLUKVEWZDAGVEKUOSYBWPZDHKTDGUFBJEWNJSSLZSILYYUMFPAPAGVKVLWZKV";
+        cipher = cipher.toUpperCase();
+
         final double[] DEUTSCH = {6.51, 1.89, 3.06, 5.08, 17.41, 1.66, 3.01, 4.76, 7.55, 0.27, 1.21, 3.44, 2.53, 9.78, 2.51, 0.79, 0.02, 7.00, 7.89, 6.15, 4.35, 0.67, 1.89, 0.03, 0.04, 1.13};
                                 //  a     b     c     d     e     f     g     h     i     j     k     l     m     n     o     p     q     r     s     t     u     v     w     x     y     z
 
         String test = "ABCABCABCABC";
         ArrayList<Integer> distance = findRepeats(cipher, 4, 10);
         int keywordlength = calcKeywordlength(distance);
-        String divided = divideString(cipher, keywordlength);
+        //String divided = divideString(cipher, keywordlength);
         int[][] freqAbs = calcFreqAbs(cipher, keywordlength);
+        double[][] freqRel = calcFreqRel(freqAbs, cipher, keywordlength);
 
         printFreq(DEUTSCH);
         System.out.println("\n \n" + "Gefundene Abstände: " + distance);
         System.out.println("\n" + "Schlüsselwortlänge: " + keywordlength);
-        System.out.println("\n" + "Geteilter Geheimtext: " + "\n" + divided);
+        //System.out.println("\n" + "Geteilter Geheimtext: " + "\n" + divided);
 
         char c = 'A';
 
@@ -138,14 +163,16 @@ public class CleanKasiski3 {
             c++;
         }
 
-        int[][] freqRel = calcFreqRel(freqAbs);
 
+        c ='A';
         System.out.print("\n \n");
         for (int i = 0; i < 26; i++) {
+            System.out.print(c + " | ");
             for (int j = 0; j < keywordlength; j++) {
                 System.out.print(freqRel[i][j] + ", ");
             }
-            System.out.println("");
+            System.out.println();
+            c++;
         }
     }
 }
