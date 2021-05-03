@@ -3,13 +3,13 @@ import java.util.Arrays;
 
 public class CleanKasiski3 {
 
-    public static Bubblesort sort = new Bubblesort();
+    //public static Bubblesort sort = new Bubblesort();
 
 
     // Bestimmen der Schlüsselwortlänge vom String des verschlüsselten Texts
     public static ArrayList<Integer> findRepeats(String cipher, int min, int max) {
         ArrayList<Integer> distance = new ArrayList<>();     // initalisieren und definieren einer neuen ArrayList als Integer-Typ
-        cipher = cipher.toUpperCase();
+        //cipher = cipher.toUpperCase();
 
         for (int l = min; l < max; l++) {                                 // Hochzählen einer for-Schleife, wobei die Länge l variiert für die gesuchten Buchstabenketten mit den Längen 4-10
             for (int spos = 0; spos < cipher.length() - l + 1; spos++) {      // Hochzählen einer for-Schleife für die Länge des Strings
@@ -34,7 +34,6 @@ public class CleanKasiski3 {
         for (int i = 1; i < distance.size(); i++) {     // "ggt"(gemeinsamer Teiler) aller gefundener Abstände
             ggt = getGGT(ggt, distance.get(i));
         }
-
         return ggt;
     }
 
@@ -46,19 +45,18 @@ public class CleanKasiski3 {
         if (b > a) {
             return getGGT(b, a);
         }
-
         return getGGT(a % b, b);
     }
 
     // Die Buchstabenhäufigkeiten vom Typ double runden
-    public static double round(double value, int places) {
+    /*public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
-    }
+    }*/
 
 
     // Den Text in Blöcke entsprechend der Schlüssellänge unterteilen
