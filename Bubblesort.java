@@ -1,7 +1,17 @@
-public class Bubblesort {
-    int smaller;
-    int bigger;
+/*
+*Bubblesort
+*/
 
+public class Bubblesort {
+    int smaller; //smaller number of comparison
+    int bigger; //bigger number of comparison
+    
+    /*
+    *@param int [][] unsorted
+    *two-dimensional int array of unsorted int
+    */
+    
+    
     public int[][] sort(int[][] unsorted) {
         for (int j = 0; j < unsorted[0].length; j++) {
             for (int i = 0; i < unsorted.length; i++) {
