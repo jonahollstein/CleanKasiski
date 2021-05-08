@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a43bbe8b-6772-47dc-86d0-7b9276941e4b" name="Default Changelist" comment="ungenutzte codeblöcke entfernt" />
+    <list id="38353b20-a7b8-4cc1-8fa4-075f0ce63564" name="Changes by moritz" comment="Changes by moritz" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1ryslDWglCdHvRma8Ar8wEGk1oF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="shared-indexes" />
+  </component>
+  <component name="RunManager">
+    <configuration name="java 16" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-16" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="CleanKasiski3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a43bbe8b-6772-47dc-86d0-7b9276941e4b" name="Default Changelist" comment="" />
+      <created>1619959813555</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619959813555</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Bubblesort: run true ausgeklammert&#10;CleanKasiski: Ausgabe von FreqAbs verschönert, Bubblesort Objekt nur ein mal erstellen, FreqAbs bleibt nach bubblesort unverändert">
+      <created>1619967197854</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619967197854</updated>
+    </task>
+    <task id="LOCAL-00002" summary="präsentationsversion&#10;wahrscheinlichkeiten hinzugefügt&#10;path by reference bug voll behoben&#10;Bubblesort wird nicht mehr verwendet&#10;Kommentare ergänzt (TODO?)">
+      <created>1619975504275</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619975504276</updated>
+    </task>
+    <task id="LOCAL-00003" summary="ungenutzte codeblöcke entfernt">
+      <created>1620026697065</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620026697065</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Bubblesort: run true ausgeklammert&#10;CleanKasiski: Ausgabe von FreqAbs verschönert, Bubblesort Objekt nur ein mal erstellen, FreqAbs bleibt nach bubblesort unverändert" />
+    <MESSAGE value="Changes by moritz" />
+    <MESSAGE value="präsentationsversion&#10;wahrscheinlichkeiten hinzugefügt&#10;path by reference bug voll behoben&#10;Bubblesort wird nicht mehr verwendet&#10;Kommentare ergänzt (TODO?)" />
+    <MESSAGE value="ungenutzte codeblöcke entfernt" />
+    <option name="LAST_COMMIT_MESSAGE" value="ungenutzte codeblöcke entfernt" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="9" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

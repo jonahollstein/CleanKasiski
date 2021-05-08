@@ -1,0 +1,149 @@
+Index: src/CleanKasiski3.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\n\npublic class CleanKasiski3 {\n\n\n    // Bestimmen der Schlüsselwortlänge vom String des verschlüsselten Texts\n    public static ArrayList<Integer> findRepeats(String cipher, int min, int max) {\n        ArrayList<Integer> distance = new ArrayList<Integer>();     // initalisieren und definieren einer neuen ArrayList als Integer-Typ\n        cipher = cipher.toUpperCase();\n\n        for (int l = min; l < max; l++) {                                 // Hochzählen einer for-Schleife, wobei die Länge l variiert für die gesuchten Buchstabenketten mit den Längen 4-10\n            for (int spos = 0; spos < cipher.length() - l + 1; spos++) {      // Hochzählen einer for-Schleife für die Länge des Strings\n                String s = cipher.substring(spos, spos + l);\n                // Herausfiltern der gef. Buchstabenketten\n                for (int i = spos + l; i < cipher.length(); i++) {         // Herausfinden der Abstände für Buchstabenwiederholungen mit Hochzählen einer for-Schleife\n                    if (cipher.startsWith(s, i)) {\n                        if (!distance.contains(i - spos)) {\n                            distance.add(i - spos);\n                        }\n                    }\n                }\n            }\n        }\n        return distance;\n    }\n\n\n    // Aus den oben bestimmten Wiederholungen die Schlüssellänge ermitteln\n    public static int calcKeywordlength(ArrayList<Integer> distance) {\n        int ggt = distance.get(0);\n        for (int i = 1; i < distance.size(); i++) {     // \"ggt\"(gemeinsamer Teiler) aller gefundener Abstände\n            ggt = getGGT(ggt, distance.get(i));\n        }\n\n        return ggt;\n    }\n\n    // Ermitteln des größten gemeinsamen Teilers aus a und b\n    public static int getGGT(int a, int b) {\n        if (b == 0) {\n            return a;\n        }\n        if (b > a) {\n            return getGGT(b, a);\n        }\n\n        return getGGT(a % b, b);\n    }\n\n    // Die Buchstabenhäufigkeiten vom Typ double runden\n    public static double round(double value, int places) {\n        if (places < 0) throw new IllegalArgumentException();\n\n        long factor = (long) Math.pow(10, places);\n        value = value * factor;\n        long tmp = Math.round(value);\n        return (double) tmp / factor;\n    }\n\n\n    // Den Text in Blöcke entsprechend der Schlüssellänge unterteilen\n    public static String divideString(String cipher, int keywordlength) {\n        int p = 0;\n        String divide = \"\";\n\n        for (int i = 0; i < cipher.length() / keywordlength; i++) {\n            String s = cipher.substring(p, p + keywordlength);\n            divide += s += \" \";\n\n            p += keywordlength;\n        }\n\n        return divide;\n    }\n\n    public static int[][] calcFreqAbs(String cipher, int keywordlength) {\n        int[][] freqAbs = new int[26][keywordlength];\n\n        for (int keypos = 0; keypos < keywordlength; keypos++) {\n            for (int i = keypos; i < cipher.length(); i += keywordlength) {\n                freqAbs[(cipher.charAt(i) - 65)][keypos]++;\n            }\n        }\n\n        return freqAbs;\n    }\n\n    public static int[][] calcFreqRel(int[][] freqAbs){\n        Bubblesort sort = new Bubblesort();\n        int[][] freqRel = sort.sort(freqAbs);\n\n        return freqRel ;\n    }\n\n    // Häufkeitsverteilung printen\n    public static void printFreq(double[] lang) {\n        System.out.print(\"\\n\" + \"Häufigkeit: | \");\n        for (int i = 0; i < lang.length; i++) {\n            System.out.print(lang[i] + \" | \");\n        }\n\n        System.out.print(\"\\n\" + \"Zeichen:    |   \");\n\n        for (char c = 'A'; c <= 'Z'; c++) {\n            System.out.print(c + \"  |   \");\n        }\n    }\n\n    public static void main(String[] args) {\n        String cipher = \"PWTMYTBADKDGPWPFYWFGUESOTLUPNVYWAPKCSOOJWWASTLSUZUSJMJBBRSTIMGPYSXOJWWASMMZQLCHJQWGYDHKOJWWASTMFPADWIPVKLHONZWPDPWRAAGQPRKNJCNPKGPJJLTHYOWOHPGYJWCUEKUZLGAOWKHOGPESMZMRWPBKVFVZTQNLAGSFSMVWTDPWRAAGQPRKNJCNPTGTKEOMSGVLYVCHKBVKLOFOBLGNCIVXWPLYBZAAEOOWKEWEODZKZOGPWGOMSWMPWTIFFLCTUTYGUOSLZSILYOHEWEODSRVVYHSFAVVHHWGIPTGHYHCWJVLERGJWKPDHGJWTUTQNBXGZEUKTWIAZPPMOGPWGJQWGYDHKNJCNPSOVWTZPFOMNQUQFGOWPYTQNBAIVOSXNSNZNVHMSPAHCXBWVDTFJRWFLASXAGPHYHCWJVLEOANWKUPTXIYGUFFSQLLHZRKZFGPYTXIYGUOWKVAEOEAOBBCVOSXVWKUMSGVLYVCHKBOGYOSTSGGUYSTAAPKYWIPLBBRSRIKULYJUVWKUPFHMDKLMWMMFRLCGUVKQSWAGVVWYNVLZSILYROMKKJSBAZSWMOWKHMILSCKZAIRPWZHMGPYSXLWTNCIVXWPIPNOMZGUSSXIMUIPYUUEGUKICMDEOPFMZMRWPGOMYGOZSXBOKLGWKTWHYLUKVEWZDAGVEKUOSYBWPZDHKTDGUFBJEWNJSSLZSILYYUMFPAPAGVKVLWZKV\";\n        final double[] DEUTSCH = {6.51, 1.89, 3.06, 5.08, 17.41, 1.66, 3.01, 4.76, 7.55, 0.27, 1.21, 3.44, 2.53, 9.78, 2.51, 0.79, 0.02, 7.00, 7.89, 6.15, 4.35, 0.67, 1.89, 0.03, 0.04, 1.13};\n                                //  a     b     c     d     e     f     g     h     i     j     k     l     m     n     o     p     q     r     s     t     u     v     w     x     y     z\n\n        String test = \"ABCABCABCABC\";\n        ArrayList<Integer> distance = findRepeats(cipher, 4, 10);\n        int keywordlength = calcKeywordlength(distance);\n        String divided = divideString(cipher, keywordlength);\n        int[][] freqAbs = calcFreqAbs(cipher, keywordlength);\n        int[][] freqRel = calcFreqRel(freqAbs);\n\n        printFreq(DEUTSCH);\n        System.out.println(\"\\n \\n\" + \"Gefundene Abstände: \" + distance);\n        System.out.println(\"\\n\" + \"Schlüsselwortlänge: \" + keywordlength);\n        System.out.println(\"\\n\" + \"Geteilter Geheimtext: \" + \"\\n\" + divided);\n\n        for (int i = 0; i < 26; i++) {\n            for (int j = 0; j < keywordlength; j++) {\n                System.out.print(freqAbs[i][j] + \", \");\n            }\n            System.out.println(\"\");\n        }\n\n        System.out.print(\"\\n \\n\");\n        for (int i = 0; i < 26; i++) {\n            for (int j = 0; j < keywordlength; j++) {\n                System.out.print(freqRel[i][j] + \", \");\n            }\n            System.out.println(\"\");\n        }\n\n\n\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/CleanKasiski3.java b/src/CleanKasiski3.java
+--- a/src/CleanKasiski3.java	(revision 5fef9c1ef1d69c41b6f5a5d2aca810a0f6616386)
++++ b/src/CleanKasiski3.java	(date 1619960063181)
+@@ -116,7 +116,6 @@
+         int keywordlength = calcKeywordlength(distance);
+         String divided = divideString(cipher, keywordlength);
+         int[][] freqAbs = calcFreqAbs(cipher, keywordlength);
+-        int[][] freqRel = calcFreqRel(freqAbs);
+ 
+         printFreq(DEUTSCH);
+         System.out.println("\n \n" + "Gefundene Abstände: " + distance);
+@@ -130,6 +129,8 @@
+             System.out.println("");
+         }
+ 
++        int[][] freqRel = calcFreqRel(freqAbs);
++
+         System.out.print("\n \n");
+         for (int i = 0; i < 26; i++) {
+             for (int j = 0; j < keywordlength; j++) {
+@@ -137,8 +138,5 @@
+             }
+             System.out.println("");
+         }
+-
+-
+-
+     }
+ }
+Index: src/Bubblesort.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Bubblesort {\n    int smaller;\n    int bigger;\n    boolean run = true;\n\n    public int[][] sort(int unsorted[][]) {\n        System.out.println(unsorted[0].length + \"adsf\");\n        for (int j = 0; j < unsorted[0].length; j++) {\n            for (\n                    int i = 0;\n                    i < unsorted.length && run == true; i++) {\n                run = false;\n\n                for (int y = 0; y < unsorted.length - 1; y++) {\n                    if (unsorted[y][j] > unsorted[y + 1][j]) {\n                        bigger = unsorted[y][j];\n                        smaller = unsorted[y + 1][j];\n                        unsorted[y][j] = smaller;\n                        unsorted[y + 1][j] = bigger;\n                        run = true;\n                    }\n                }\n            }\n        }\n\n        return unsorted;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Bubblesort.java b/src/Bubblesort.java
+--- a/src/Bubblesort.java	(revision 5fef9c1ef1d69c41b6f5a5d2aca810a0f6616386)
++++ b/src/Bubblesort.java	(date 1619960332075)
+@@ -3,12 +3,11 @@
+     int bigger;
+     boolean run = true;
+ 
+-    public int[][] sort(int unsorted[][]) {
+-        System.out.println(unsorted[0].length + "adsf");
++    public int[][] sort(int[][] unsorted) {
+         for (int j = 0; j < unsorted[0].length; j++) {
+             for (
+                     int i = 0;
+-                    i < unsorted.length && run == true; i++) {
++                    i < unsorted.length && run; i++) {
+                 run = false;
+ 
+                 for (int y = 0; y < unsorted.length - 1; y++) {
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1619959909373)
++++ b/.idea/modules.xml	(date 1619959909373)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/CleanKasiski.iml" filepath="$PROJECT_DIR$/CleanKasiski.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: CleanKasiski.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CleanKasiski.iml b/CleanKasiski.iml
+new file mode 100644
+--- /dev/null	(date 1619959909332)
++++ b/CleanKasiski.iml	(date 1619959909332)
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1619959909721)
++++ b/.idea/.gitignore	(date 1619959909721)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1619959909384)
++++ b/.idea/misc.xml	(date 1619959909384)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="openjdk-16" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1619959909392)
++++ b/.idea/vcs.xml	(date 1619959909392)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
