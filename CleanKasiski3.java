@@ -2,8 +2,7 @@
 *kasiski test
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class CleanKasiski3 {
     
@@ -97,12 +96,34 @@ public class CleanKasiski3 {
         }
         return freqRel ;
     }
+    // Print most frequent letter with freqRel
+    public static void printTop(double[][] freqRel){
+        //initialize two arrays to store the value and index respectively
+        double[] highest = new double[freqRel[0].length];
+        int[] highestpos = new int[freqRel[0].length];
+
+        //iterate Y Axis (all letters in the Alphabet)
+        for(int i = 0; i < freqRel.length; i++){
+            //iterate Z Axis (all Keyword positions)
+            for(int j = 0; j <freqRel[i].length; j++){
+                //store most frequent letter for every keyword position
+                if(freqRel[i][j] > highest[j]){
+                    highest[j] = freqRel[i][j];
+                    highestpos[j] = i+65;
+                }
+            }
+        }
+        //print both arrays
+        for(int l = 0; l < freqRel[0].length; l++){
+            System.out.println(l + ": " + (char)highestpos[l] + " | " + highest[l]);
+        }
+    }
 
     // Häufkeitsverteilung printen
     public static void printFreq(double[] language) {
         System.out.print("\n" + "Häufigkeit: | ");
-        for (double v : language) {
-            System.out.print(v + " | ");
+        for (double i : language) {
+            System.out.print(i + " | ");
         }
 
         /* 'Enhanced' foreach-Schleife
@@ -135,17 +156,21 @@ public class CleanKasiski3 {
         int[][] freqAbs = calcFreqAbs(cipher, keywordlength);
         //initialize freqRel with return value of calcFreqRel with absolute frequency cipher and keywordlength
         double[][] freqRel = calcFreqRel(freqAbs, cipher, keywordlength);
+
+
         //initialize char c as 'A'
         char c = 'A';
 
         //print distances and keywordlength
         printFreq(DEUTSCH);
+        System.out.println("\n" + "Häufigster Buchstabe an der Schlüsselposition:");
+        printTop(freqRel);
         System.out.println("\n \n" + "Gefundene Abstände: " + distance);
         System.out.println("\n" + "Schlüsselwortlänge: " + keywordlength);
 
         
 
-        System.out.println("\nHaufigkeiten an Blockpositionen:");
+        System.out.println("\nHaufigkeiten an Blockpositionen");
 
         //iterate over the alphabet
         for (int i = 0; i < 26; i++) {
