@@ -2,6 +2,7 @@
 *kasiski test
 */
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class CleanKasiski3 {
@@ -98,28 +99,45 @@ public class CleanKasiski3 {
     }
     // Print most frequent letter with freqRel
     public static void printTop(double[][] freqRel){
-        //initialize two arrays to store the value and index respectively
-        double[] highest = new double[freqRel[0].length];
-        int[] highestpos = new int[freqRel[0].length];
+        //initialize two arrays to store the value and index of the most frequent char
+        double[] first = new double[freqRel[0].length];
+        int[] firstpos = new int[freqRel[0].length];
+        //initialize to arrays to store the value and index of the second most frequent char
+        double[] second = new double[freqRel[0].length];
+        int[] secondpos = new int[freqRel[0].length];
 
         //iterate Y Axis (all letters in the Alphabet)
         for(int i = 0; i < freqRel.length; i++){
             //iterate Z Axis (all Keyword positions)
             for(int j = 0; j <freqRel[i].length; j++){
                 //store most frequent letter for every keyword position
-                if(freqRel[i][j] > highest[j]){
-                    highest[j] = freqRel[i][j];
-                    highestpos[j] = i+65;
+                if(freqRel[i][j] > first[j]){
+                    first[j] = freqRel[i][j];
+                    //store current index + 65 (ASCII...)
+                    firstpos[j] = i+65;
                 }
             }
         }
+        for(int i = 0; i < freqRel.length; i++){
+            //iterate Z Axis (all Keyword positions)
+            for(int j = 0; j <freqRel[i].length; j++){
+                //store most frequent letter for every keyword position
+                if(freqRel[i][j] > second[j] && freqRel[i][j] < first[j]){
+                    second[j] = freqRel[i][j];
+                    secondpos[j] = i+65;
+                }
+            }
+        }
+        // initialize DecimalFomat with patten 00.00
+        DecimalFormat df = new DecimalFormat("00.00");
         //print both arrays
         for(int l = 0; l < freqRel[0].length; l++){
-            System.out.println(l + ": " + (char)highestpos[l] + " | " + highest[l]);
+            // for each row:  index + 1      Most frequent character        value                  Second most frequent character     value
+            System.out.println((l+1) + ": " + (char)firstpos[l] + " | " + df.format(first[l]) + " || " + (char)secondpos[l] + " | " + df.format(second[l]));
         }
     }
 
-    // Häufkeitsverteilung printen
+    // Häufkeitsverteilung der Sprache printen
     public static void printFreq(double[] language) {
         System.out.print("\n" + "Häufigkeit: | ");
         for (double i : language) {
@@ -140,6 +158,43 @@ public class CleanKasiski3 {
             System.out.print(c + "  |   ");
         }
     }
+    // Alle Häufigkeiten printen (optional)
+    public static void printAllFreq(int[][] freqAbs, double[][] freqRel, int keywordlength){
+        DecimalFormat df = new DecimalFormat("00.00");
+        DecimalFormat cf = new DecimalFormat("00");
+
+        //initialize char c as 'A'
+        char c = 'A';
+
+        //iterate over the alphabet
+        for (int i = 0; i < 26; i++) {
+            //print current char and divider
+            System.out.print(c + " | ");
+            //iterate over every keyword position
+            for (int j = 0; j < keywordlength; j++) {
+                System.out.print(cf.format(freqAbs[i][j]) + " | ");
+            }
+            System.out.println();
+            c++;
+        }
+
+        // set char c to 'A'
+        c ='A';
+        //print two new line
+        System.out.print("\n \n");
+        //iterate over the alphabet
+        for (int i = 0; i < 26; i++) {
+            //print current char and divider
+            System.out.print(c + " | ");
+            //iterate over every keyword position
+            for (int j = 0; j < keywordlength; j++) {
+                System.out.print(df.format(freqRel[i][j]) + " | ");
+            }
+            System.out.println();
+            c++;
+        }
+
+    }
 
     public static void main(String[] args) {
         //initialize string cipher wirh decrypted text
@@ -157,47 +212,16 @@ public class CleanKasiski3 {
         //initialize freqRel with return value of calcFreqRel with absolute frequency cipher and keywordlength
         double[][] freqRel = calcFreqRel(freqAbs, cipher, keywordlength);
 
-
-        //initialize char c as 'A'
-        char c = 'A';
-
         //print distances and keywordlength
         printFreq(DEUTSCH);
-        System.out.println("\n" + "Häufigster Buchstabe an der Schlüsselposition:");
-        printTop(freqRel);
+        
         System.out.println("\n \n" + "Gefundene Abstände: " + distance);
         System.out.println("\n" + "Schlüsselwortlänge: " + keywordlength);
 
-        
+        System.out.println("\n" + "Häufigster Buchstabe an der Schlüsselposition:");
+        printTop(freqRel);
 
-        System.out.println("\nHaufigkeiten an Blockpositionen");
-
-        //iterate over the alphabet
-        for (int i = 0; i < 26; i++) {
-            //print current char and divider
-            System.out.print(c + " | ");
-            //iterate over every keyword position
-            for (int j = 0; j < keywordlength; j++) {
-                System.out.print(freqAbs[i][j] + ", ");
-            }
-            System.out.println();
-            c++;
-        }
-
-        // set char c to 'A'
-        c ='A';
-        //print two new line
-        System.out.print("\n \n");
-        //iterate over the alphabet
-        for (int i = 0; i < 26; i++) {
-            //print current char and divider
-            System.out.print(c + " | ");
-            //iterate over every keyword position
-            for (int j = 0; j < keywordlength; j++) {
-                System.out.print(freqRel[i][j] + ", ");
-            }
-            System.out.println();
-            c++;
-        }
+        //System.out.println("\nHaufigkeiten an Blockpositionen");
+        //printAllFreq(freqAbs, freqRel, keywordlength);
     }
 }
